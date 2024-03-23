@@ -1,9 +1,66 @@
+body{
+    background-color: #1A1A1d;
+    opacity: 1;
+    font-family: 'Rakkas';
+}
+
 #gameBoardDOM{
-    padding-top: 100px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+
+.cells{
+    padding: 75px;
     display: grid;
     grid-template-rows: repeat(3, 100px);
     grid-template-columns: repeat(3, 100px);
+}
+
+.cell-button{
+    background-color: #1A1A1D;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    border-color: #c3073f;
+    border-width: 2px;
+    border-style: solid;
+}
+
+button[id='0']{
+    border-left: none;
+    border-top: none;
+}
+
+button[id='1']{
+    border-top: none;
+}
+
+button[id='2']{
+    border-top: none;
+    border-right: none;
+}
+
+button[id='3']{
+    border-left: none;    
+}
+
+button[id='5']{
+    border-right: none;
+}
+
+button[id='6']{
+    border-bottom: none;
+    border-left: none;
+}
+
+button[id='7']{
+    border-bottom: none;
+}
+
+button[id='8']{
+    border-bottom: none;
+    border-right: none;
 }
 
 .markers{
@@ -17,10 +74,29 @@
     margin: 10px;
     font-weight: bold;
     font-size: 20px;
+    color: white;
+    background-color: #1A1A1D;
+    border-color: #c3073f;
+    border-width: 2px;
     border-radius: 10px;
-    border-style: none;
+    border-style: solid;
+    
+}
+
+.reset-button{
+    color: white;
+    background-color: #1A1A1D;
+    border: #c3073f;
+    font-size: 24px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border-style: solid;
+}
+
+.reset-button:hover{
+    box-shadow: 1px 5px 5px #950740;
 }
 
 .marker-button:hover{
-    box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 5px 5px #950740;
 }

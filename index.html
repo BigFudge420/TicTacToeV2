@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Rakkas:regular" rel="stylesheet" />
     <script src="script.js"></script>
 </head>
 <body>
-    <div class="markers">
-        <button class="marker-button" class = 'X'>X</button>
-        <button class="marker-button" class = 'O'>O</button>
-    </div>
     <div id="gameBoardDOM">
-        <button class="cell-button" data-field="0" id="0"></button>
-        <button class="cell-button" data-field="1" id="1"></button>
-        <button class="cell-button" data-field="2" id="2"></button>
-        <button class="cell-button" data-field="3" id="3"></button>
-        <button class="cell-button" data-field="4" id="4"></button>
-        <button class="cell-button" data-field="5" id="5"></button>
-        <button class="cell-button" data-field="6" id="6"></button>
-        <button class="cell-button" data-field="7" id="7"></button>
-        <button class="cell-button" data-field="8" id="8"></button>
+        <div class="markers">
+            <button class="marker-button" class = 'X'>X</button>
+            <button class="marker-button" class = 'O'>O</button>
+        </div>
+        <div class="cells">
+            <button class="cell-button" data-field="0" id="0"></button>
+            <button class="cell-button" data-field="1" id="1"></button>
+            <button class="cell-button" data-field="2" id="2"></button>
+            <button class="cell-button" data-field="3" id="3"></button>
+            <button class="cell-button" data-field="4" id="4"></button>
+            <button class="cell-button" data-field="5" id="5"></button>
+            <button class="cell-button" data-field="6" id="6"></button>
+            <button class="cell-button" data-field="7" id="7"></button>
+            <button class="cell-button" data-field="8" id="8"></button>
+        </div>
+        <button class="reset-button">Reset</button>
     </div>
-    <button class="reset-button">Reset</button>
 </body>
 </html>
