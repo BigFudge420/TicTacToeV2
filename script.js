@@ -168,6 +168,8 @@ document.addEventListener('DOMContentLoaded', function(){
             MarkerBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     humanMarker = btn.textContent
+                    Gameboard.resetBoard()
+                    GameboardDisplay.clearBoardDisplay()
                     computerMarker = humanMarker === 'X' ? 'O' : 'X';
                     if (computerMarker === 'X'){
                         currentMarker.textContent = 'Your marker : O'
