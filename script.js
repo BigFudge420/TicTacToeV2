@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 // Checks for tie or win
                 if (checkWin(computerMarker)){
-                    console.log('COMPUTER WINS')
+                    alert('COMPUTER WINS')
                     gameOver = true
                 }
                 else if(board.every((cell) => cell !== '')){
-                    console.log("IT'S A TIE")
+                    alert("IT'S A TIE")
                     gameOver = true
                 }
             }
@@ -106,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 // Checks for tie or win
                 if (checkWin(humanMarker)){
-                    console.log('PLAYER WINS')
+                    alert('PLAYER WINS')
                     gameOver = true
                 }
                 else if(board.every((cell) => cell !== '')){
-                    console.log("IT'S A TIE")
+                    alert("IT'S A TIE")
                     gameOver = true
                 }
                 else{
@@ -163,6 +163,9 @@ document.addEventListener('DOMContentLoaded', function(){
                 btn.addEventListener('click', () => {
                     humanMarker = btn.textContent
                     computerMarker = humanMarker === 'X' ? 'O' : 'X';
+                    if (computerMarker === 'X'){
+                        Gamecontroller.computerPlay()
+                    }
                 })
             })
         }
