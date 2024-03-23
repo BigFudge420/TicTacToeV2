@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function(){ 
     let MarkerBtns = document.querySelectorAll('.marker-button')
     let resetBtn = document.querySelector('.reset-button')
+    let currentMarker = document.querySelector('.marker-status')
     const buttons = document.querySelectorAll('.cell-button')
     let board = ['','','','','','','','','']        
     let gameOver = false
@@ -169,7 +170,11 @@ document.addEventListener('DOMContentLoaded', function(){
                     humanMarker = btn.textContent
                     computerMarker = humanMarker === 'X' ? 'O' : 'X';
                     if (computerMarker === 'X'){
+                        currentMarker.textContent = 'Your marker : O'
                         Gamecontroller.computerPlay()
+                    }
+                    else{
+                        currentMarker.textContent = 'Your marker : X'                        
                     }
                 })
             })

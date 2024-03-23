@@ -4,6 +4,18 @@ body{
     font-family: 'Rakkas';
 }
 
+.marker-status{
+    font-size: 24px;
+    color: white;
+    text-shadow: 2px 2px 2px #c3073f;
+}
+
+.heading{
+    color: white;
+    font-size: 40px;
+    text-shadow: 2px 2px 2px #c3073f;
+}
+
 #gameBoardDOM{
     display: flex;
     flex-direction: column;
@@ -13,11 +25,13 @@ body{
 .cells{
     padding: 75px;
     display: grid;
+    margin-top: -80px;
     grid-template-rows: repeat(3, 100px);
     grid-template-columns: repeat(3, 100px);
 }
 
 .cell-button{
+    font-family: 'Rakkas';
     background-color: #1A1A1D;
     color: white;
     font-weight: bold;
@@ -70,9 +84,9 @@ button[id='8']{
 }
 
 .marker-button{
+    font-family: 'Rakkas';
     padding: 10px 20px 10px 20px;
-    margin: 10px;
-    font-weight: bold;
+    margin: -50px 10px 0px 10px;
     font-size: 20px;
     color: white;
     background-color: #1A1A1D;
@@ -84,10 +98,12 @@ button[id='8']{
 }
 
 .reset-button{
+    font-family: 'Rakkas';
     color: white;
     background-color: #1A1A1D;
     border: #c3073f;
     font-size: 24px;
+    margin-top: -40px;
     padding: 5px 15px;
     border-radius: 10px;
     border-style: solid;
