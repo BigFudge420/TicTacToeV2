@@ -1,6 +1,7 @@
 //To prevent functions running before DOM loads
 document.addEventListener('DOMContentLoaded', function(){ 
     let MarkerBtns = document.querySelectorAll('.marker-button')
+    let resetBtn = document.querySelector('.reset-button')
     const buttons = document.querySelectorAll('.cell-button')
     let board = ['','','','','','','','','']        
     let gameOver = false
@@ -127,6 +128,10 @@ document.addEventListener('DOMContentLoaded', function(){
             GameboardDisplay.setMarker()
             buttons.forEach(btn => {
                 btn.addEventListener('click', humanPlay)
+            })
+            resetBtn.addEventListener('click', () => {
+                GameboardDisplay.clearBoardDisplay()
+                Gameboard.resetBoard()
             })
         }
 
