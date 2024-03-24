@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
             // Updates board and display, and checks win for computer
             if (play && !gameOver){
+                console.log('yeaa')
                 Gameboard.updateBoard(computerCell, computerMarker)
                 GameboardDisplay.updateBoardDisplay(computerCell, computerMarker)
 
@@ -104,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function(){
             if (e.target.textContent === '' && (board[humanCell] === '' && !gameOver)){
                 GameboardDisplay.updateBoardDisplay(humanCell, humanMarker)
                 Gameboard.updateBoard(humanCell, humanMarker)
-                console.log('HIII')
 
                 // Checks for tie or win
                 if (checkWin(humanMarker)){
@@ -140,6 +140,9 @@ document.addEventListener('DOMContentLoaded', function(){
             GameboardDisplay.clearBoardDisplay()
             Gameboard.resetBoard()
             gameOver = false
+            if (humanMarker === 'O'){
+                computerPlay()
+            }
         }
 
         return {start, reset, humanPlay, computerPlay, checkWin}
@@ -166,16 +169,16 @@ document.addEventListener('DOMContentLoaded', function(){
         const setMarker = () => {
             MarkerBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    humanMarker = btn.textContent
-                    Gameboard.resetBoard()
-                    GameboardDisplay.clearBoardDisplay()
-                    computerMarker = humanMarker === 'X' ? 'O' : 'X';
-                    if (computerMarker === 'X'){
-                        currentMarker.textContent = 'Your marker : O'
-                        Gamecontroller.computerPlay()
-                    }
-                    else{
-                        currentMarker.textContent = 'Your marker : X'                        
+                    if (btn.textContent !== humanMarker){
+                        humanMarker = btn.textContent
+                        computerMarker = humanMarker === 'X' ? 'O' : 'X';
+                        Gamecontroller.reset()
+                        if (computerMarker === 'X'){
+                            currentMarker.textContent = 'Your marker : O'
+                        }
+                        else{
+                            currentMarker.textContent = 'Your marker : X'                        
+                        }
                     }
                 })
             })
