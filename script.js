@@ -3,7 +3,12 @@ document.addEventListener('DOMContentLoaded', function(){
     let MarkerBtns = document.querySelectorAll('.marker-button')
     let resetBtn = document.querySelector('.reset-button')
     let currentMarker = document.querySelector('.marker-status')
-    const buttons = document.querySelectorAll('.cell-button')
+    let buttons = document.querySelectorAll('.cell-button')
+    let closeButton = document.querySelector('.closeButton')
+    let overlay = document.getElementById('overlay')
+    let resultPopup = document.querySelector('.resultPopup')
+    let popupTitle = document.querySelector('.popupTitle')
+    let popupBody = document.querySelector('.popupBody')
     let board = ['','','','','','','','','']        
     let gameOver = false
     let humanMarker = 'X'
@@ -85,12 +90,16 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 // Checks for tie or win
                 if (checkWin(computerMarker)){
-                    alert('COMPUTER WINS')
                     gameOver = true
+                    Popup.revealPopup()
+                    popupTitle.textContent = "The Specter's Triumph"
+                    popupBody.textContent = "Yeehaw! The Specter done wrangled ya good, partner! With its slick moves and cunning algorithms, it outwitted ya quicker than a jackrabbit in a dust storm. Looks like victory's gone and danced off into the neon horizon without ya. But don't you fret none, there's always another round on the digital prairie."
                 }
                 else if(board.every((cell) => cell !== '')){
-                    alert("IT'S A TIE")
                     gameOver = true
+                    Popup.revealPopup()
+                    popupTitle.textContent = "Stalemate"
+                    popupBody.textContent = "Well, ain't this a pickle? You and The Specter done got yourselves in a right proper deadlock, like two gunslingers staring each other down at high noon. With neither one of ya budging an inch, the game ended in a stalemate, leaving both of ya biting the cyber dust. Guess sometimes in this neon-lit saga, there ain't no winners, just two souls fading into the digital abyss together."
                 }
             }
         }
@@ -108,15 +117,19 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 // Checks for tie or win
                 if (checkWin(humanMarker)){
-                    alert('PLAYER WINS')
                     gameOver = true
+                    Popup.revealPopup()
+                    popupTitle.textContent = "Outwitting The Specter"
+                    popupBody.textContent = "Well, slap me silly and call me a glitch! You done gone and outsmarted The Specter, partner! With your sharp wit and quick reflexes, you danced circles 'round that digital varmint like a tumbleweed in a cyclone. Victory's yours, shining brighter than a neon sign at midnight. You've shown that even in this dystopian frontier, there's still room for a little triumph and glory."
                 }
                 else if(board.every((cell) => cell !== '')){
-                    alert("IT'S A TIE")
                     gameOver = true
+                    Popup.revealPopup()
+                    popupTitle.textContent = "Stalemate"
+                    popupBody.textContent = "Well, ain't this a pickle? You and The Specter done got yourselves in a right proper deadlock, like two gunslingers staring each other down at high noon. With neither one of ya budging an inch, the game ended in a stalemate, leaving both of ya biting the cyber dust. Guess sometimes in this neon-lit saga, there ain't no winners, just two souls fading into the digital abyss together."
                 }
                 else{
-                    setTimeout(computerPlay(), 1000)
+                    computerPlay()
                 }
             }
             else{
@@ -124,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        // Starts the game
+        // Starts the game and applies event listeners
         const start = () => {
             GameboardDisplay.setMarker()
             buttons.forEach(btn => {
@@ -132,6 +145,9 @@ document.addEventListener('DOMContentLoaded', function(){
             })            
             resetBtn.addEventListener('click', () => {
                 reset()
+            })
+            closeButton.addEventListener('click', () => {
+                Popup.closePopup()
             })
         }
 
@@ -186,6 +202,23 @@ document.addEventListener('DOMContentLoaded', function(){
 
         return {clearBoardDisplay, updateBoardDisplay, setMarker}
 
+    })()
+
+    // Deals with the popups
+    const Popup = (() => {
+
+        // Closes the popup by removing the 'active' class
+        const closePopup = () => {
+            resultPopup.classList.remove('active')
+            overlay.classList.remove('active')
+        }
+        
+        const revealPopup = () => {
+            resultPopup.classList.add('active')
+            overlay.classList.add('active')
+        }
+
+        return {closePopup, revealPopup}
     })()
 
     Gamecontroller.start()
