@@ -129,10 +129,9 @@ document.addEventListener('DOMContentLoaded', function(){
             GameboardDisplay.setMarker()
             buttons.forEach(btn => {
                 btn.addEventListener('click', humanPlay)
-            })
+            })            
             resetBtn.addEventListener('click', () => {
-                GameboardDisplay.clearBoardDisplay()
-                Gameboard.resetBoard()
+                reset()
             })
         }
 
