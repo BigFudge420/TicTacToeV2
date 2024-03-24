@@ -34,47 +34,13 @@ body{
     font-family: 'Rakkas';
     background-color: #1A1A1D;
     color: white;
+    border-radius: 10px;
     font-weight: bold;
+    margin: 5px;
     font-size: 24px;
     border-color: #c3073f;
     border-width: 2px;
     border-style: solid;
-}
-
-button[id='0']{
-    border-left: none;
-    border-top: none;
-}
-
-button[id='1']{
-    border-top: none;
-}
-
-button[id='2']{
-    border-top: none;
-    border-right: none;
-}
-
-button[id='3']{
-    border-left: none;    
-}
-
-button[id='5']{
-    border-right: none;
-}
-
-button[id='6']{
-    border-bottom: none;
-    border-left: none;
-}
-
-button[id='7']{
-    border-bottom: none;
-}
-
-button[id='8']{
-    border-bottom: none;
-    border-right: none;
 }
 
 .markers{
@@ -103,7 +69,7 @@ button[id='8']{
     background-color: #1A1A1D;
     border: #c3073f;
     font-size: 24px;
-    margin-top: -40px;
+    margin-top: -50px;
     padding: 5px 15px;
     border-radius: 10px;
     border-style: solid;
