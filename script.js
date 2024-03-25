@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function(){
             overlay.classList.remove('active')
         }
         
+        // Reveals the popup by adding the 'active' class
         const revealPopup = () => {
             resultPopup.classList.add('active')
             overlay.classList.add('active')
