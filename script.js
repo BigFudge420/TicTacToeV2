@@ -17,15 +17,26 @@ document.addEventListener('DOMContentLoaded', function(){
     // Gameboard contains methods to modify the board
     const Gameboard = (() => { 
 
+
         // Updates board 
-        const updateBoard = (index, marker) => {
-            if (index >= 0 && board[index] === '' && board.length > index && !gameOver){
-                board[index] = marker
+        const updateBoard = (state, index, marker) => {
+            if (index >= 0 && state[index] === '' && state.length > index && !gameOver){
+                state[index] = marker
                 return true
             }
             else {
                 return false
             }
+        }
+
+        // Find available moves
+        const getAvailMoves = (state) => {
+            let boardIndex = [0,1,2,3,4,5,6,7,8]
+            let availMoves = boardIndex.filter((index) => {
+                if (state[index] === ''){
+                    return true                }
+            })
+            return availMoves
         }
 
         // Resets board 
@@ -34,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
 
         // Returns the methods 
-        return {updateBoard, resetBoard}
+        return {updateBoard, resetBoard, getAvailMoves}
     })()
 
     //Gamecontroller controls gameflow 
@@ -42,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function(){
         gameOver = false
 
         //Checks if win conditions are met
-        const checkWin = (marker) => {
+        const checkWin = (marker, state) => {
 
             //All possible win combinations
             let winningCombinations = [
@@ -59,37 +70,97 @@ document.addEventListener('DOMContentLoaded', function(){
             //Returns a boolean value if any win condition is met
             return winningCombinations.some((combination) => {
                 return combination.every((index) => {
-                    if (board[index] === marker){
+                    if (state[index] === marker){
                         return true
                     }
                 })
             })
         }
         
+        // Minimax function to play available moves and return array of moves and scores
+        const minimax = (state, isMaximizing, playerMarker, cell) => {
+            let emptyCells = Gameboard.getAvailMoves(state)
+
+            // Checks for and evaluates any terminal state in the current state of the game and returns a score
+            if (checkWin('O',state) || checkWin('X', state)){
+                if (isMaximizing){
+                    return {
+                        index: cell,
+                        score: -1
+                    }
+                }
+                else{
+                    return {
+                        index: cell,
+                        score: 1
+                    }
+                }
+            }
+            else if(state.every((cell) => cell !== '')){
+                return {
+                    index: cell,
+                    score: 0
+                }
+            }
+
+            // Plays all the possible moves available for the player, recursively calls minimax for the opposing player and returns an array of moves and scores
+            let moves = []
+
+            for (let i = 0; i < emptyCells.length; i++){
+                let move = {}
+                move.index = emptyCells[i]
+
+                let newState = [...state]
+
+                // Temporarily updates the gameboard 
+                Gameboard.updateBoard(newState, emptyCells[i], playerMarker)
+
+                // Call minimax for opposing player
+                if (isMaximizing){
+                    let result = minimax(newState, false, humanMarker, i)
+                    move.score = result.score
+                }
+                else{
+                    let result = minimax(newState, true, computerMarker, i)
+                    move.score = result.score
+                }
+
+                moves.push(move)
+            }
+
+            return findBestValue(moves, isMaximizing)
+            
+        }
+
+        // Finds the best move in the moves array created by the minimax function 
+        const findBestValue = (moves, isMaximising) => {
+            let bestMove
+            let bestScore = isMaximising ? -Infinity : Infinity
+            
+            for (let i = 0; i < moves.length; i++) {
+                if (isMaximising && moves[i].score > bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                } else if (!isMaximising && moves[i].score < bestScore) {
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+
+            return moves[bestMove]
+        }
+
         // Controls the computer choice and turn
         const computerPlay = () => {
-            let computerCell
-            let cellDOM
-            let play = false
-
-            // Selects and checks if selected cell is empty
-            do{
-                computerCell = Math.floor(Math.random() * 9)
-                cellDOM = document.getElementById(`${computerCell}`)
-                if (board[computerCell] === '' && cellDOM.textContent === ''){
-                    play = true
-                }                
-            }
-            while(!play)
+            let choice = minimax(board, true, computerMarker).index
 
             // Updates board and display, and checks win for computer
-            if (play && !gameOver){
-                console.log('yeaa')
-                Gameboard.updateBoard(computerCell, computerMarker)
-                GameboardDisplay.updateBoardDisplay(computerCell, computerMarker)
+            if (!gameOver){
+                Gameboard.updateBoard(board, choice, computerMarker)
+                GameboardDisplay.updateBoardDisplay(choice, computerMarker)
 
                 // Checks for tie or win
-                if (checkWin(computerMarker)){
+                if (checkWin(computerMarker, board)){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "The Specter's Triumph"
@@ -113,10 +184,10 @@ document.addEventListener('DOMContentLoaded', function(){
             // Updates textcontent and board when clicked on a cell
             if (e.target.textContent === '' && (board[humanCell] === '' && !gameOver)){
                 GameboardDisplay.updateBoardDisplay(humanCell, humanMarker)
-                Gameboard.updateBoard(humanCell, humanMarker)
+                Gameboard.updateBoard(board, humanCell, humanMarker)
 
                 // Checks for tie or win
-                if (checkWin(humanMarker)){
+                if (checkWin(humanMarker,board)){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "Outwitting The Specter"
@@ -129,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function(){
                     popupBody.textContent = "Well, ain't this a pickle? You and The Specter done got yourselves in a right proper deadlock, like two gunslingers staring each other down at high noon. With neither one of ya budging an inch, the game ended in a stalemate, leaving both of ya biting the cyber dust. Guess sometimes in this neon-lit saga, there ain't no winners, just two souls fading into the digital abyss together."
                 }
                 else{
-                    computerPlay()
+                    computerPlay() 
                 }
             }
             else{
@@ -225,5 +296,4 @@ document.addEventListener('DOMContentLoaded', function(){
     Gamecontroller.start()
 })
 
-JNSDKJSNKDN
 
