@@ -78,27 +78,29 @@ document.addEventListener('DOMContentLoaded', function(){
         }
         
         // Minimax function to play available moves and return array of moves and scores
-        const minimax = (state, isMaximizing, playerMarker, cell) => {
+        const minimax = (state, isMaximizing, playerMarker) => {
             let emptyCells = Gameboard.getAvailMoves(state)
 
             // Checks for and evaluates any terminal state in the current state of the game and returns a score
             if (checkWin('O',state) || checkWin('X', state)){
+
+                // If the game is at a terminal state, it returns an array with the index and score associated with the move that leads to this state
+                // Returns +1 if the previous player (player that made the move), was AI and vice versa
                 if (isMaximizing){
                     return {
-                        index: cell,
                         score: -1
                     }
                 }
                 else{
                     return {
-                        index: cell,
                         score: 1
                     }
                 }
             }
+
+            // If the game ends in a tie, returns array with index and score of 0
             else if(state.every((cell) => cell !== '')){
                 return {
-                    index: cell,
                     score: 0
                 }
             }
@@ -117,17 +119,19 @@ document.addEventListener('DOMContentLoaded', function(){
 
                 // Call minimax for opposing player
                 if (isMaximizing){
-                    let result = minimax(newState, false, humanMarker, i)
+                    let result = minimax(newState, false, humanMarker)
                     move.score = result.score
                 }
                 else{
-                    let result = minimax(newState, true, computerMarker, i)
+                    let result = minimax(newState, true, computerMarker)
                     move.score = result.score
                 }
 
+                // Adds the current processing move to the moves array
                 moves.push(move)
             }
 
+            // Returns the best move in the moves array 
             return findBestValue(moves, isMaximizing)
             
         }
@@ -135,8 +139,10 @@ document.addEventListener('DOMContentLoaded', function(){
         // Finds the best move in the moves array created by the minimax function 
         const findBestValue = (moves, isMaximising) => {
             let bestMove
+            // Chooses a best score based on the player for which the minimax function was called for
             let bestScore = isMaximising ? -Infinity : Infinity
             
+            // Goes through all moves in the array, and chooses the best move based on the player for which the function was called for
             for (let i = 0; i < moves.length; i++) {
                 if (isMaximising && moves[i].score > bestScore) {
                     bestScore = moves[i].score;
@@ -147,11 +153,13 @@ document.addEventListener('DOMContentLoaded', function(){
                 }
             }
 
+            // Returns the best move object
             return moves[bestMove]
         }
 
         // Controls the computer choice and turn
         const computerPlay = () => {
+            // Returns the index of the best available move
             let choice = minimax(board, true, computerMarker).index
 
             // Updates board and display, and checks win for computer
@@ -232,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        return {start, reset, humanPlay, computerPlay, checkWin}
+        return {start, reset, humanPlay, computerPlay, checkWin, minimax, findBestValue}
 
     })()
 
