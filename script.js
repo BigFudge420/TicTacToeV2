@@ -2,17 +2,20 @@
 document.addEventListener('DOMContentLoaded', function(){ 
     let MarkerBtns = document.querySelectorAll('.marker-button')
     let resetBtn = document.querySelector('.reset-button')
-    let currentMarker = document.querySelector('.marker-status')
     let buttons = document.querySelectorAll('.cell-button')
     let closeButton = document.querySelector('.closeButton')
     let overlay = document.getElementById('overlay')
     let resultPopup = document.querySelector('.resultPopup')
     let popupTitle = document.querySelector('.popupTitle')
     let popupBody = document.querySelector('.popupBody')
+    let markerX = document.querySelector('.X')
+    let markerO = document.querySelector('.O')
+    let difficultyMenu = document.getElementById('difficulty-menu')
     let board = ['','','','','','','','','']        
     let gameOver = false
     let humanMarker = 'X'
     let computerMarker = 'O'
+    let aiPrecision
 
     // Gameboard contains methods to modify the board
     const Gameboard = (() => { 
@@ -159,8 +162,22 @@ document.addEventListener('DOMContentLoaded', function(){
 
         // Controls the computer choice and turn
         const computerPlay = () => {
-            // Returns the index of the best available move
-            let choice = minimax(board, true, computerMarker).index
+            let choice
+            // Chooses if the move to make will be random or the best available move
+            if (aiPrecision >= Math.random()){
+                // Returns the index of the best available move
+                choice = minimax(board, true, computerMarker).index
+            }
+            else{
+                // Returns a random whole number from 0 to 8
+                let play = false
+                do {
+                    choice = Math.floor(Math.random() * 9)
+                    if (board[choice] === ''){
+                        play = true
+                    }                    
+                }while (!play)
+            }
 
             // Updates board and display, and checks win for computer
             if (!gameOver){
@@ -216,9 +233,43 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
+        // Sets game difficulty
+        const setDifficulty = () => {
+            let difficulty
+            difficulty = difficultyMenu.value
+            difficultyMenu.addEventListener('click', () => {
+                // stores the previously chosen difficulty
+                let previousDifficulty = difficulty
+                difficulty = difficultyMenu.value
+
+                // Sets ai precision based on the difficulty
+                if (difficulty === 'easy'){
+                    aiPrecision = 0.5
+                }
+                else if (difficulty === 'medium' ){
+                    aiPrecision = 0.7
+                
+                }
+                else if (difficulty === 'hard'){
+                    aiPrecision = 0.85
+                }
+                else if (difficulty === 'unbeatable'){
+                    aiPrecision = 1
+                }
+
+                // Checks to make sure previous difficulty is not the same as current difficulty and then resets the game
+                if(difficulty !== previousDifficulty){
+                    Gameboard.resetBoard()
+                    GameboardDisplay.clearBoardDisplay()
+                    gameOver = false
+                }
+            })
+        }
+
         // Starts the game and applies event listeners
         const start = () => {
             GameboardDisplay.setMarker()
+            setDifficulty()
             buttons.forEach(btn => {
                 btn.addEventListener('click', humanPlay)
             })            
@@ -240,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function(){
             }
         }
 
-        return {start, reset, humanPlay, computerPlay, checkWin, minimax, findBestValue}
+        return {start, reset, humanPlay, computerPlay, checkWin, minimax, findBestValue, setDifficulty}
 
     })()
 
@@ -268,11 +319,13 @@ document.addEventListener('DOMContentLoaded', function(){
                         humanMarker = btn.textContent
                         computerMarker = humanMarker === 'X' ? 'O' : 'X';
                         Gamecontroller.reset()
-                        if (computerMarker === 'X'){
-                            currentMarker.textContent = 'Your marker : O'
+                        if (btn.textContent === 'X'){
+                            markerX.classList.add('active')
+                            markerO.classList.remove('active')
                         }
-                        else{
-                            currentMarker.textContent = 'Your marker : X'                        
+                        else {
+                            markerO.classList.add('active')
+                            markerX.classList.remove('active')
                         }
                     }
                 })
