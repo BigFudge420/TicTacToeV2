@@ -262,6 +262,9 @@ document.addEventListener('DOMContentLoaded', function(){
                     Gameboard.resetBoard()
                     GameboardDisplay.clearBoardDisplay()
                     gameOver = false
+                    if (humanMarker === 'O'){
+                        computerPlay()
+                    }
                 }
             })
         }
