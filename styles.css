@@ -192,20 +192,39 @@ body{
     margin: 10px 10px 0px 10px;
 }
 
-@media all and (max-width: 425px){
+@media screen and (max-width: 480px){
     body{
         justify-content: center;
     }
 
-    .gameBoardDOM{
+    .heading{
         width: 100%;
+        padding: 0px 10px;
+    }
+    .gameBoardDOM{
+        max-width: 100%;
+        max-height: 100;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cells{
+        justify-content: center;
+        width: 15em;
+        margin: 40px;
+    }
+
+    .cell-button{
+        width: 4em;
+        height: 4em;
     }
 
     .marker-button{
-        width: 150px;
+        width: 5em;
     }
 
     .settings{
+        width: 100%;
         padding: 10px;
     }
 }
