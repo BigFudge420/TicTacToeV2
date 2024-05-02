@@ -189,13 +189,13 @@ document.addEventListener('DOMContentLoaded', function(){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "The Specter's Triumph"
-                    popupBody.textContent = "Yeehaw! The Specter done wrangled ya good, partner! With its slick moves and cunning algorithms, it outwitted ya quicker than a jackrabbit in a dust storm. Looks like victory's gone and danced off into the horizon without ya. But don't you fret none, there's always another round on this prairie."
+                    popupBody.textContent = "Honest, you just suck."
                 }
                 else if(board.every((cell) => cell !== '')){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "Stalemate"
-                    popupBody.textContent = "Well, ain't this a pickle? You and The Specter done got yourselves in a right proper deadlock, like two gunslingers staring each other down at high noon. With neither one of ya budging an inch, the game ended in a stalemate, leaving both of ya biting the dust. Guess sometimes in this saga, there ain't no winners, just two souls fading into the abyss together."
+                    popupBody.textContent = "Skill issue."
                 }
             }
         }
@@ -216,13 +216,13 @@ document.addEventListener('DOMContentLoaded', function(){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "Outwitting The Specter"
-                    popupBody.textContent = "Well, slap me silly and call me a glitch! You done gone and outsmarted The Specter, partner! With your sharp wit and quick reflexes, you danced circles 'round that digital varmint like a tumbleweed in a cyclone. Victory's yours, shining brighter than a neon sign at midnight. You've shown that even in this wasteland, there's still room for a little triumph and glory."
+                    popupBody.textContent = "A fluke to be honest."
                 }
                 else if(board.every((cell) => cell !== '')){
                     gameOver = true
                     Popup.revealPopup()
                     popupTitle.textContent = "Stalemate"
-                    popupBody.textContent = "Well, ain't this a pickle? You and The Specter done got yourselves in a right proper deadlock, like two gunslingers staring each other down at high noon. With neither one of ya budging an inch, the game ended in a stalemate, leaving both of ya biting the dust. Guess sometimes in this saga, there ain't no winners, just two souls fading into the abyss together."
+                    popupBody.textContent = "Skill issue."
                 }
                 else{
                     computerPlay() 
